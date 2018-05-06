@@ -154,8 +154,8 @@ int alta(EPersona personas[],int lim)
             fflush(stdin);
             scanf("%d",&edad);
         }
-
         personas[i].edad=edad;
+        acumuladores(personas[i].edad);
         personas[i].estado=0;
         retor=0;
         mostar(personas,lim);
@@ -188,6 +188,7 @@ int baja(EPersona personas[],int lim)
             }
             if(resp=='s')///si es si devuelve es valor al inicio
             {
+                acumuladores(personas[i].edad);
                 personas[i].estado=1;
                 personas[i].dni=0;
                 strcpy(personas[i].nombre,"");
@@ -237,4 +238,53 @@ int edadV(int edades)
         return 0;
     }
     return 1;
+}
+
+int acumuladores(int edad)
+{
+    int menor=0;
+    int adulto=0;
+    int mayor=0;
+
+    if(edad>0)
+    {
+        acumuMas(edad,menor,adulto,mayor);
+    }
+    else
+    {
+        acumuMenos(edad,menor,adulto,mayor);
+    }
+
+}
+
+int acumuMas(int edad,int menor,int adulto,int mayor)
+{
+    if(edad<19)
+    {
+        menor++;
+    }
+    else if(edad>18 || edad<35)
+    {
+        adulto++;
+    }
+    else
+    {
+        mayor++;
+    }
+
+}
+int acumuMenos(int edad,int menor,int adulto,int mayor)
+{
+    if(edad<19)
+    {
+        menor--;
+    }
+    else if(edad>18 || edad<35)
+    {
+        adulto--;
+    }
+    else
+    {
+        mayor--;
+    }
 }

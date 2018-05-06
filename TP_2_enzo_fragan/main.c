@@ -13,6 +13,7 @@ int main()
     int opcion=0;
     int valorAlta;
     int valorBaja;
+    int valorGrafico;
     EPersona listaDePersonas[Tam];
     inicio(listaDePersonas,Tam);
 

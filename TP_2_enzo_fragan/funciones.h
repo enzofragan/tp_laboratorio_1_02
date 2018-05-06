@@ -36,3 +36,6 @@ int ordenarNombre(EPersona [],int);
 int letraV(char []);
 int numeroV(char []);
 int edadV(int );
+int acumuladores(int);
+int acumuMas(int,int,int,int);
+int acumuMenos(int,int,int,int);
