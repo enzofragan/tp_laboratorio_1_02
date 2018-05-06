@@ -17,3 +17,21 @@
 	<ctype.h>
 	"funciones.h"
 
+1525636016 source:c:\users\administrador\desktop\tp_2_enzo_fragan\main.c
+	<stdio.h>
+	<stdlib.h>
+	<strings.h>
+	<conio.h>
+	<ctype.h>
+	"funciones.h"
+
+1525635708 c:\users\administrador\desktop\tp_2_enzo_fragan\funciones.h
+
+1525636366 source:c:\users\administrador\desktop\tp_2_enzo_fragan\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<strings.h>
+	<conio.h>
+	<ctype.h>
+	"funciones.h"
+

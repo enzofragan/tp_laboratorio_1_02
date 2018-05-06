@@ -35,6 +35,39 @@ int obtenerEspacioLibre(EPersona lista[],int lim)
     return -1;
 }
 
+int buscarPorDni(EPersona lista[], int lim)
+{
+    int dni;
+    int index=-1;
+    int i;
+    char auxDni[50];
+
+    printf("ingrese el dni a buscar: ");
+    fflush(stdin);
+    gets(auxDni);///pide el numero com char
+    while(numeroV(auxDni)==0)///valida si es numero o no
+    {
+        printf("ingrese un dni valido: ");
+        fflush(stdin);
+        gets(auxDni);
+    }
+    dni = atoi(auxDni);
+
+    for (i=0;i<lim;i++)
+    {
+        if(dni==lista[i].dni)///si son iguales lo encontro
+        {
+            index=dni;///de vuelve el id encontrado
+            break;
+        }
+        else
+        {
+            index=-2;
+        }
+    }
+    return index;
+}
+
 int mostar(EPersona personas[],int lim)
 {
     int retor = -1;
@@ -46,11 +79,31 @@ int mostar(EPersona personas[],int lim)
         {
             if(personas[i].estado==0)///si esta coupado lo muestra
             {
-                printf("%d---%s---%d\n",personas[i].dni,personas[i].nombre,personas[i].edad);
+                printf("\n%d---%s---%d\n",personas[i].dni,personas[i].nombre,personas[i].edad);
             }
         }
     }
     return retor;
+}
+
+int ordenarNombre(EPersona personas[],int lim)
+{
+    EPersona auxiliar;
+    int i;
+    int j;
+    for (i=0;i<lim-1;i++)///mano amarilla
+    {
+        for(j=i+1;j<lim;j++)///mano celeste
+        {
+            if(strcmp(personas[i].nombre,personas[j].nombre)>0)///menor a mayor o criterio de ordenamiento
+            {
+                auxiliar=personas[i];
+                personas[i]=personas[j];
+                personas[j]=auxiliar;
+            }
+        }
+    }
+    mostar(personas,lim);
 }
 
 int alta(EPersona personas[],int lim)
@@ -61,7 +114,6 @@ int alta(EPersona personas[],int lim)
     char auxE[50];
     int dni;
     int edad;
-    int edadDos;
 
     i=obtenerEspacioLibre(personas,lim);///
     if(i>=0)
@@ -76,12 +128,6 @@ int alta(EPersona personas[],int lim)
             gets(aux);
         }
         dni=atoi(aux);
-       /* while(dniV(personas,dni,lim)==0)
-        {
-            printf("ingrese un dni real:");///
-            fflush(stdin);
-            scanf("%d",&dni);
-        }*/
         personas[i].dni=dni;
         printf("ingrese el nombre: ");///
         fflush(stdin);
@@ -117,6 +163,46 @@ int alta(EPersona personas[],int lim)
     return retor;
 }
 
+int baja(EPersona personas[],int lim)
+{
+    int busqueda;
+    char resp;
+    int index=0;
+    int i;
+
+    busqueda=buscarPorDni(personas,lim);
+
+    for(i=0;i<lim;i++)
+    {
+        if(busqueda>=0 && personas[i].dni==busqueda)
+        {
+            mostar(personas,lim);
+            printf("desea darlo de baja? s/n: ");
+            fflush(stdin);
+            resp=getche();
+            while(resp!='s' && resp!='n')///si no es ni si ni no
+            {
+                printf("\ningrese un valor valido s/n: ");
+                fflush(stdin);
+                resp=getche();
+            }
+            if(resp=='s')///si es si devuelve es valor al inicio
+            {
+                personas[i].estado=1;
+                personas[i].dni=0;
+                strcpy(personas[i].nombre,"");
+                personas[i].edad=0;
+            }
+            else if(resp=='n')
+            {
+                index=-1;
+            }
+            mostar(personas,lim);
+        }
+    }
+    return index;
+}
+
 int numeroV(char num[])
 {
     int i=0;
@@ -149,18 +235,6 @@ int edadV(int edades)
     if(edades>99 || edades<0)
     {
         return 0;
-    }
-    return 1;
-}
-
-int dniV(EPersona personas[],int auxDni,int lim)
-{
-    for(int i=0; i<lim; i++)
-    {
-        if(personas[i].dni==auxDni && personas[i].estado==1)
-        {
-            return 0;
-        }
     }
     return 1;
 }

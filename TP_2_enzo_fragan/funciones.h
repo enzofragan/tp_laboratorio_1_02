@@ -28,10 +28,11 @@ typedef struct {
 #endif // FUNCIONES_H_INCLUDED
 int inicio(EPersona [],int);
 int obtenerEspacioLibre(EPersona lista[],int);
-int buscarPorDni(EPersona lista[], int dni);
+int buscarPorDni(EPersona lista[], int lim);
 int alta(EPersona [],int);
+int baja(EPersona [],int);
 int mostar(EPersona [],int);
+int ordenarNombre(EPersona [],int);
 int letraV(char []);
 int numeroV(char []);
 int edadV(int );
-int dniV(EPersona [],int ,int);

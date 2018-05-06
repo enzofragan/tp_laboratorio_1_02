@@ -12,6 +12,7 @@ int main()
     char seguir='s';
     int opcion=0;
     int valorAlta;
+    int valorBaja;
     EPersona listaDePersonas[Tam];
     inicio(listaDePersonas,Tam);
 
@@ -39,8 +40,18 @@ int main()
                 }
                 break;
             case 2:
+                valorBaja=baja(listaDePersonas,Tam);
+                if(valorBaja>=0)
+                {
+                    printf("\nbaja completada\n");
+                }
+                else
+                {
+                    printf("\naccion completada\n");
+                }
                 break;
             case 3:
+                ordenarNombre(listaDePersonas,Tam);
                 break;
             case 4:
                 break;
