@@ -106,14 +106,12 @@ int ordenarNombre(EPersona personas[],int lim)
     mostar(personas,lim);
 }
 
-int alta(EPersona personas[],int lim)
+int alta(EPersona personas[], int edad,int lim)
 {
     int retor=-1;
     int i;
     char aux[50];
-    char auxE[50];
     int dni;
-    int edad;
 
     i=obtenerEspacioLibre(personas,lim);///
     if(i>=0)
@@ -138,27 +136,9 @@ int alta(EPersona personas[],int lim)
             fflush(stdin);
             gets(personas[i].nombre);
         }
-        printf("ingrese su edad:");///
-        fflush(stdin);
-        gets(auxE);
-        while(numeroV(auxE)==0)
-        {
-            printf("ingrese una edad valida: ");///
-            fflush(stdin);
-            gets(auxE);
-        }
-        edad=atoi(auxE);
-        while(edadV(edad)==0)
-        {
-            printf("ingrese una edad real:");///
-            fflush(stdin);
-            scanf("%d",&edad);
-        }
         personas[i].edad=edad;
-        acumuladores(personas[i].edad);
         personas[i].estado=0;
         retor=0;
-        mostar(personas,lim);
     }
     return retor;
 }
@@ -188,17 +168,12 @@ int baja(EPersona personas[],int lim)
             }
             if(resp=='s')///si es si devuelve es valor al inicio
             {
-                acumuladores(personas[i].edad);
                 personas[i].estado=1;
-                personas[i].dni=0;
-                strcpy(personas[i].nombre,"");
-                personas[i].edad=0;
             }
             else if(resp=='n')
             {
                 index=-1;
             }
-            mostar(personas,lim);
         }
     }
     return index;
@@ -239,52 +214,62 @@ int edadV(int edades)
     }
     return 1;
 }
-
-int acumuladores(int edad)
+void graficoBarras(int menor,int adulto,int mayor)
 {
-    int menor=0;
-    int adulto=0;
-    int mayor=0;
+    int maxTodo;
+    int flag=0;
+    int flag2=0;
 
-    if(edad>0)
+    if(menor >= adulto && menor >= mayor)
     {
-        acumuMas(edad,menor,adulto,mayor);
+        maxTodo = menor;
+    }
+    else if(adulto >= menor && adulto >= mayor)
+    {
+        maxTodo = adulto;
     }
     else
     {
-        acumuMenos(edad,menor,adulto,mayor);
+        maxTodo = mayor;
     }
 
+for(int i=maxTodo;i>0; i--)
+{
+    if(i<= menor)
+    {
+        printf("\n\t%c",42);///
+        flag=2;
+        flag2=1;
+    }
+    if(i<=adulto)
+    {
+        flag=1;
+
+        if(flag2==0)
+        {
+            printf("\n\t\t\t%c",42);///
+        }
+        if(flag2==1)
+        {
+            printf("\t\t");///
+        }
+    }
+    if(i<= mayor)
+    {
+        if(flag==0)
+        {
+             printf("\t\t\t\t\t");
+        }
+
+        if(flag==1)
+        {
+             printf("\n\t\t\t%c",42);///
+        }
+        if(flag==2)
+        {
+            printf("\t\t\t\t\t");
+        }
+    }
 }
-
-int acumuMas(int edad,int menor,int adulto,int mayor)
-{
-    if(edad<19)
-    {
-        menor++;
-    }
-    else if(edad>18 || edad<35)
-    {
-        adulto++;
-    }
-    else
-    {
-        mayor++;
-    }
-
-}
-int acumuMenos(int edad,int menor,int adulto,int mayor)
-{
-    if(edad<19)
-    {
-        menor--;
-    }
-    else if(edad>18 || edad<35)
-    {
-        adulto--;
-    }
-    else
-    {
-        mayor--;
-    }
+printf("\n      <18            19-35            >35\n\nCant:   %d               %d               %d\n",menor,adulto,mayor);
 }
