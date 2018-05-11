@@ -33,6 +33,7 @@ int alta(EPersona [], int,int);
 int baja(EPersona [],int);
 int mostar(EPersona [],int);
 int ordenarNombre(EPersona [],int);
+int repeticion(EPersona [],int,int);
 int letraV(char []);
 int numeroV(char []);
 int edadV(int );

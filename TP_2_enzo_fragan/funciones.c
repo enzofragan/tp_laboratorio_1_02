@@ -5,7 +5,7 @@
 #include <ctype.h>
 #include "funciones.h"
 
-int inicio(EPersona personas[],int lim)
+int inicio(EPersona personas[],int lim)///inicia los datos
 {
     int retorno=-1;
     int i;
@@ -23,11 +23,11 @@ int inicio(EPersona personas[],int lim)
     return retorno;
 }
 
-int obtenerEspacioLibre(EPersona lista[],int lim)
+int obtenerEspacioLibre(EPersona lista[],int lim)///busca un espacio libre
 {
     for(int i=0; i<lim; i++)
     {
-        if(lista[i].estado==1)
+        if(lista[i].estado==1)///mientras este libre
         {
             return i;
         }
@@ -91,9 +91,9 @@ int ordenarNombre(EPersona personas[],int lim)
     EPersona auxiliar;
     int i;
     int j;
-    for (i=0;i<lim-1;i++)///mano amarilla
+    for (i=0;i<lim-1;i++)///se posiciona en un lugar menor al limite
     {
-        for(j=i+1;j<lim;j++)///mano celeste
+        for(j=i+1;j<lim;j++)///lo corre hasta llegar al final y compara
         {
             if(strcmp(personas[i].nombre,personas[j].nombre)>0)///menor a mayor o criterio de ordenamiento
             {
@@ -113,31 +113,37 @@ int alta(EPersona personas[], int edad,int lim)
     char aux[50];
     int dni;
 
-    i=obtenerEspacioLibre(personas,lim);///
+    i=obtenerEspacioLibre(personas,lim);///si hay lugar libre
     if(i>=0)
     {
-        printf("ingrese el dni:");///
+        printf("ingrese el dni:");///pide el dni
         fflush(stdin);
         gets(aux);
         while(numeroV(aux)==0)
         {
-            printf("ingrese un dni valido:");///
+            printf("ingrese un dni valido:");///valida
             fflush(stdin);
             gets(aux);
         }
         dni=atoi(aux);
+        while(repeticion(personas,dni,lim)==0)
+        {
+            printf("ingrese un dni no repetido:");///valida que el dni no este repetido
+            fflush(stdin);
+            scanf("%d",&dni);
+        }
         personas[i].dni=dni;
-        printf("ingrese el nombre: ");///
+        printf("ingrese el nombre: ");///pide el nombre
         fflush(stdin);
         gets(personas[i].nombre);
         while(letraV(personas[i].nombre)==0)///valida si es solo string
         {
-            printf("ingrese un nombre valido: ");///
+            printf("ingrese un nombre valido: ");///valida si es nombre
             fflush(stdin);
             gets(personas[i].nombre);
         }
-        personas[i].edad=edad;
-        personas[i].estado=0;
+        personas[i].edad=edad;///asigna el valor del auxiliar de edad y se la para al a estructura
+        personas[i].estado=0;///cambia ese estado a ocupado
         retor=0;
     }
     return retor;
@@ -150,29 +156,29 @@ int baja(EPersona personas[],int lim)
     int index=0;
     int i;
 
-    busqueda=buscarPorDni(personas,lim);
+    busqueda=buscarPorDni(personas,lim);///busca el dni a borra
 
     for(i=0;i<lim;i++)
     {
-        if(busqueda>=0 && personas[i].dni==busqueda)
+        if(busqueda>=0 && personas[i].dni==busqueda)///si lo encontro
         {
-            mostar(personas,lim);
-            printf("desea darlo de baja? s/n: ");
+            mostar(personas,lim);///lo muestra
+            printf("desea darlo de baja? s/n: ");///pregunta si lo dara de baja
             fflush(stdin);
             resp=getche();
             while(resp!='s' && resp!='n')///si no es ni si ni no
             {
-                printf("\ningrese un valor valido s/n: ");
+                printf("\ningrese un valor valido s/n: ");///valida la respuesta
                 fflush(stdin);
                 resp=getche();
             }
             if(resp=='s')///si es si devuelve es valor al inicio
             {
-                personas[i].estado=1;
+                personas[i].estado=1;///cambia su estado a libre
             }
             else if(resp=='n')
             {
-                index=-1;
+                index=-1;///si no lo cancela
             }
         }
     }
@@ -182,7 +188,7 @@ int baja(EPersona personas[],int lim)
 int numeroV(char num[])
 {
     int i=0;
-    while(num[i] != '\0')
+    while(num[i] != '\0')///mientrar haya algo
     {
         if(!(isdigit(num[i])))///si el char no es un digito
         {
@@ -214,13 +220,25 @@ int edadV(int edades)
     }
     return 1;
 }
-void graficoBarras(int menor,int adulto,int mayor)
+int repeticion(EPersona persona[],int dni,int lim)///valida la repeticion
+{
+    int i;
+    for(i=0;i<lim;i++)///recorre todo
+    {
+        if (persona[i].dni==dni)///si el dni de es posicion es igual al que se pasa
+        {
+            return 0;///se esta repitiendo
+        }
+        i++;
+    }
+
+    return 1;
+}
+void graficoBarras(int menor,int adulto,int mayor)///grafica con los contadores
 {
     int maxTodo;
-    int flag=0;
-    int flag2=0;
 
-    if(menor >= adulto && menor >= mayor)
+    if(menor >= adulto && menor >= mayor)///verifica cual es el valor mas alto
     {
         maxTodo = menor;
     }
@@ -233,43 +251,21 @@ void graficoBarras(int menor,int adulto,int mayor)
         maxTodo = mayor;
     }
 
-for(int i=maxTodo;i>0; i--)
+for(int i=maxTodo;i>0; i--)///recorre en decenso todo el i definido por el valor maximo
 {
     if(i<= menor)
     {
-        printf("\n\t%c",42);///
-        flag=2;
-        flag2=1;
+        printf("\n%c",42);///si es de el contador de 18 menor a el maximo escribe un * (219)
     }
     if(i<=adulto)
     {
-        flag=1;
+        printf("\n\t\t%c",42);///si es de el contador de 18 y 35 menor a el maximo escribe un * (219)
 
-        if(flag2==0)
-        {
-            printf("\n\t\t\t%c",42);///
-        }
-        if(flag2==1)
-        {
-            printf("\t\t");///
-        }
     }
     if(i<= mayor)
     {
-        if(flag==0)
-        {
-             printf("\t\t\t\t\t");
-        }
-
-        if(flag==1)
-        {
-             printf("\n\t\t\t%c",42);///
-        }
-        if(flag==2)
-        {
-            printf("\t\t\t\t\t");
-        }
+        printf("\n\t\t\t\t%c",42);///si es de 35 menor a el maximo escribe un * (219)
     }
 }
-printf("\n      <18            19-35            >35\n\nCant:   %d               %d               %d\n",menor,adulto,mayor);
+printf("\n<18            19-35            >35\n");///impreme los contadores
 }

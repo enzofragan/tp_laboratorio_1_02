@@ -36,38 +36,38 @@ int main()
         switch(opcion)
         {
             case 1:
-                printf("ingrese su edad:");///
+                printf("ingrese su edad:");///se pide la edad fuera de la funcion ara contarlo
                 fflush(stdin);
                 gets(auxE);
                 while(numeroV(auxE)==0)
                 {
-                    printf("ingrese una edad valida: ");///
+                    printf("ingrese una edad valida: ");///valida
                     fflush(stdin);
                     gets(auxE);
                 }
                 edad=atoi(auxE);
                 while(edadV(edad)==0)
                 {
-                    printf("ingrese una edad real:");///
+                    printf("ingrese una edad real:");///valida si es real
                     fflush(stdin);
                     scanf("%d",&edad);
                 }
-                valorAlta=alta(listaDePersonas,edad,Tam);
+                valorAlta=alta(listaDePersonas,edad,Tam);///uedo llama a la funcion y pasa la lista y edad
                 if(valorAlta>=0)
                 {
-                    if (edad<19)
+                    if (edad<18)///si todo sale bien cuenta
                     {
                         menor++;
                     }
-                    if(edad>18 && edad<=35)
+                    if(edad>19 && edad<=35)
                     {
                         adulto++;
                     }
-                    if(edad>35)
+                    if(edad>36)
                     {
                         mayor++;
                     }
-                    mostar(listaDePersonas,Tam);
+                    mostar(listaDePersonas,Tam);///y lo muestra
                     printf("\ncompleto\n");
                 }
                 else
@@ -76,20 +76,20 @@ int main()
                 }
                 break;
             case 2:
-                valorBaja=baja(listaDePersonas,Tam);
-                if(valorBaja>=0)
+                valorBaja=baja(listaDePersonas,Tam);///llama a la baja
+                if(valorBaja>=0)///si todo sale bien devuelve los parametros originales y descuenta antes de baja la edad
                 {
                     listaDePersonas[valorBaja].dni=0;
                     strcpy(listaDePersonas[valorBaja].nombre,"");
-                    if (listaDePersonas[valorBaja].edad<19)
+                    if (listaDePersonas[valorBaja].edad<18)
                     {
                         menor--;
                     }
-                    if(listaDePersonas[valorBaja].edad>18 && listaDePersonas[valorBaja].edad<35)
+                    if(listaDePersonas[valorBaja].edad>19 && listaDePersonas[valorBaja].edad<35)
                     {
                         adulto--;
                     }
-                    if(listaDePersonas[valorBaja].edad>35)
+                    if(listaDePersonas[valorBaja].edad>36)
                     {
                         mayor--;
                     }
@@ -103,17 +103,17 @@ int main()
                 }
                 break;
             case 3:
-                ordenarNombre(listaDePersonas,Tam);
+                ordenarNombre(listaDePersonas,Tam);///ordena toda la lista por nombre
                 break;
             case 4:
-                if(menor==0 && adulto==0 && mayor==0)
+                if(menor==0 && adulto==0 && mayor==0)///valida si enrealidad hay algo en los contadores
                 {
                     printf("no se puede realizar el grafico");
                     break;
                 }
                 else
                 {
-                    graficoBarras(menor,adulto,mayor);
+                    graficoBarras(menor,adulto,mayor);///si hay imprime el grafico
                 }
                 break;
             case 5:
